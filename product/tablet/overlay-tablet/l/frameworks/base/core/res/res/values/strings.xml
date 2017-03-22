@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <add-resource type="string" name="global_action_restart_title" />
+    <string name="global_action_restart_title">Restart tablet</string>
+    <add-resource type="string" name="global_action_restart_message" />
+    <string name="global_action_restart_message">Restarting your tablet will clear temporary files from memory. Would you like to restart your tablet now?</string>
+    <add-resource type="string" name="global_action_restart_progress_message" />
+    <string name="global_action_restart_progress_message">Restarting tablet...</string>
+</resources>

@@ -1,0 +1,3 @@
+To check in a new SATA firmware in the tree, upload a new *.LOD binary.
+Of course, you need to run the script gen_rp4_bin.py on that raw FW binary to
+generate what needs to be flashed on RP4 partition, ie. rp4.bin

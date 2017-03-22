@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (c) 2014-2015, NVIDIA Corporation.  All rights reserved.
+
+     NVIDIA Corporation and its licensors retain all intellectual property and
+     proprietary rights in and to this software and related documentation.  Any
+     use, reproduction, disclosure or distribution of this software and related
+     documentation without an express license agreement from NVIDIA Corporation
+     is strictly prohibited.
+-->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string-array name="screen_timeout_entries">
+    <item>"Tidak pernah"</item>
+    <item msgid="3342301044271143016">"15 detik"</item>
+    <item msgid="8881760709354815449">"30 detik"</item>
+    <item msgid="7589406073232279088">"1 menit"</item>
+    <item msgid="7001195990902244174">"2 menit"</item>
+    <item msgid="7489864775127957179">"5 menit"</item>
+    <item msgid="2314124409517439288">"10 menit"</item>
+    <item msgid="6864027152847611413">"30 menit"</item>
+  </string-array>
+</resources>

@@ -1,0 +1,33 @@
+# Copyright (c) 2012-2015 NVIDIA Corporation.  All Rights Reserved.
+#
+# NVIDIA Corporation and its licensors retain all intellectual property and
+# proprietary rights in and to this software and related documentation.  Any
+# use, reproduction, disclosure or distribution of this software and related
+# documentation without an express license agreement from NVIDIA Corporation
+# is strictly prohibited.
+
+import init.icera.tablet.rc
+
+on init
+# icera generic properties
+    setprop gsm.modem.power.device /sys/devices/platform/tegra_usb_modem_power/modem_reset/value,0,1
+    setprop gsm.modem.edp.device /sys/power/sysedp
+    setprop gsm.modem.edp.state /sys/devices/platform/sysedp_modem/sysedp_state
+    setprop ro.ril.devicename /dev/ttyACM0
+    setprop mdc_initial_max_retry 10
+
+on boot
+# BB Reset GPIO access for user radio
+    chown radio system /sys/devices/platform/tegra_usb_modem_power/modem_reset/value
+# EDP access for user radio
+    chown radio system /sys/power/sysedp/consumer_register
+    chown radio system /sys/power/sysedp/consumer_unregister
+    chown radio system /sys/devices/platform/sysedp_modem/sysedp_state
+    chown radio system /sys/devices/platform/modem-thermal/temp
+    chown radio system /sys/devices/platform/modem-thermal/sensors_active
+
+on post-fs-data
+# BB mapping symbolic name to the logging ttyACM port
+    symlink /dev/ttyACM3 /dev/log_modem
+# BB mapping symbolic name to the at ttyACM port
+    symlink /dev/ttyACM2 /dev/at_modem

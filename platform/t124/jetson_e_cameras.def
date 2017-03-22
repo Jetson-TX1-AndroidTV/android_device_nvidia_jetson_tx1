@@ -1,0 +1,28 @@
+# Copyright (c) 2016, NVIDIA CORPORATION.  All rights reserved.
+#
+# NVIDIA CORPORATION and its licensors retain all intellectual property
+# and proprietary rights in and to this software, related documentation
+# and any modifications thereto.  Any use, reproduction, disclosure or
+# distribution of this software and related documentation without an express
+# license agreement from NVIDIA CORPORATION is strictly prohibited.
+
+############################################################################################
+# Module Definitions
+#   refer to https://wiki.nvidia.com/wmpwiki/index.php/Camera#Camera_Sensor_Board_Matrix
+#            https://wiki.nvidia.com/wmpwiki/index.php/Camera/Android/Configuration
+############################################################################################
+
+AVAILABLE_CAM_BOARD_IDS=""
+
+on_module_default() {
+  enable_autofocus              true
+  enable_external               false
+  enable_flash_autofocus        false
+  enable_front                  true
+  enable_full                   true
+  enable_manual_postprocessing  true
+  enable_manual_sensor          true
+  enable_raw                    true
+  enable_camera                 true
+  use_media_profiles            "/system/etc/camera_repo/jetson_e_media_profiles.xml"
+}

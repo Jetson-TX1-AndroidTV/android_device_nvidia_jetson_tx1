@@ -1,0 +1,27 @@
+#pbc properties
+persist.sys.pbc.enabled = 1
+pbc.amb.temp.ibat.cap = 5200
+pbc.high.temp.ibat.cap = 3900
+pbc.ibatt.warnalert_path = /sys/bus/i2c/devices/1-0040/iio_device/warn_current_limit_0
+pbc.ibatt.hightemp_warnalert = 5000
+pbc.bat.high.temp.thres = 450
+pbc.ibat.polling.interval = 1000
+persist.sys.pbc.pbat.cap = 30000
+persist.sys.pbc.ibat.cap = 5200
+persist.sys.pbc.inf.game.mode = 1
+pbc.inf.socthres = 20
+pbc.inf.exit.diff = 5
+pbc.pbat.slope = 0
+pbc.pbat.intercept = 0
+
+#Audio properties
+ro.audio.usb.period_us = 5000
+
+# VRR properties
+# read-once enable
+ro.sf.vrr.enabled = 1
+ro.sys.vrr.hdmi = 0
+# read-dynamic enable
+persist.sys.sf.vrr = 1
+persist.sys.vrr.refreshrate = 60
+persist.sys.vrr.apprate = 60

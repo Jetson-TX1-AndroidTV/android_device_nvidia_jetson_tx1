@@ -1,0 +1,33 @@
+wifi.interface=wlan0
+wifi.Xinterface=xlan0
+ap.interface=wlan0
+
+# boot animation property
+ro.bootanim.preload = 1
+
+#pbc properties
+pbc.log.on = 0
+pbc.hist.size = 5
+pbc.step.period = 700
+pbc.polling.period = 100
+pbc.throttle.depth = 0
+pbc.hyst = 5
+persist.sys.pbc.psys.cap = 29999
+pbc.over.cfboost = true
+pbc.cfboost.floor = 800000
+pbc.gfboost.floor = 300000
+
+#disable Eco mode with charger
+persist.sys.NV_ECO.IF.CHARGING = false
+
+# HDMI-CEC properties
+ro.hdmi.device_type = 4
+ro.hdmi.one_touch_play_on_home = 0
+persist.sys.hdmi.keep_awake = 0
+
+#used to enable adb over tcpip on port 5555 from Settings app
+persist.nvda.adb.tcp.enable = 0
+persist.nvda.adb.tcp.port = 0
+
+#factory reset protection
+ro.frp.pst = /dev/block/platform/sdhci-tegra.3/by-name/RP2

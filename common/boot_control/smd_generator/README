@@ -1,0 +1,10 @@
+================================================================================
+To generate a new SMD metadata image do the below:
+
+** 1 **
+Modify generate-smd.c and use "mm -B" to get nv_smd_generator
+
+** 2 **
+Execute nv_smd_generator. Will output binary file slot_metadata.bin
+
+================================================================================

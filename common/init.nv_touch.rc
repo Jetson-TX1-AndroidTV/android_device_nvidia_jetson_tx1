@@ -1,0 +1,39 @@
+#Copyright (c) 2011-2015 NVIDIA Corporation.  All Rights Reserved.
+#
+#NVIDIA Corporation and its licensors retain all intellectual property and
+#proprietary rights in and to this software and related documentation.  Any
+#use, reproduction, disclosure or distribution of this software and related
+#documentation without an express license agreement from NVIDIA Corporation
+#is strictly prohibited.
+
+on boot
+# Touch
+    chown system system /sys/class/input/input0/enabled
+    chown system system /sys/class/input/input1/enabled
+    chown system system /sys/class/input/input2/enabled
+
+on post-fs
+    chown system system /sys/devices/virtual/nvtouch/nvtouch/driver_mode
+
+on init
+
+service nvtouch /vendor/bin/nvtouch_daemon
+    class main
+    user system
+    group system input
+    disabled
+
+on post-fs-data
+    mkdir /data/nvtouch 0770 system system
+
+on property:persist.touch.solution=sharp
+    write /sys/devices/virtual/nvtouch/nvtouch/driver_mode "1 "
+    stop nvtouch
+    enable ShTouch
+    start ShTouch
+
+on property:persist.touch.solution=nvtouch
+    write /sys/devices/virtual/nvtouch/nvtouch/driver_mode "0 "
+    stop ShTouch
+    enable nvtouch
+    start nvtouch

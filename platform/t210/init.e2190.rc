@@ -1,0 +1,35 @@
+#Copyright (c) 2014-2016, NVIDIA CORPORATION.  All rights reserved.
+#
+#NVIDIA Corporation and its licensors retain all intellectual property and
+#proprietary rights in and to this software and related documentation.  Any
+#use, reproduction, disclosure or distribution of this software and related
+#documentation without an express license agreement from NVIDIA Corporation
+#is strictly prohibited.
+
+import init.tegra_emmc.rc
+import init.t210.rc
+import init.ray_touch.rc
+
+on fs
+    setprop ro.wifi.sdmmc 1
+    setprop ro.gps.gpio 66
+    setprop ro.gpsstatus.changed true
+    setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
+    setprop ro.crypto.umount_sd false
+    setprop ro.crypto.fuse_sdcard true
+    mount_all /fstab.e2190
+
+on post-fs-data
+    write /sys/class/gpio/export 66
+    write /sys/class/gpio/gpio66/direction out
+    write /sys/class/gpio/gpio66/value 0
+    chown root system /sys/class/gpio/gpio66/value
+    chmod 0664 /sys/class/gpio/gpio66/value
+    setprop persist.gps.present false
+
+on property:persist.gps.present=true
+    symlink /system/etc/android.hardware.location.gps.xml /data/android.hardware.location.gps.xml
+    start start-gps
+
+on property:persist.gps.present=false
+    rm /data/android.hardware.location.gps.xml

@@ -1,0 +1,35 @@
+#Copyright (c) 2014-2016, NVIDIA CORPORATION.  All rights reserved.
+#
+#NVIDIA Corporation and its licensors retain all intellectual property and
+#proprietary rights in and to this software and related documentation.  Any
+#use, reproduction, disclosure or distribution of this software and related
+#documentation without an express license agreement from NVIDIA Corporation
+#is strictly prohibited.
+
+import init.tegra_sata.rc
+import init.t210.rc
+import init.foster_e_common.rc
+
+on post-fs-data
+    start cyupdate
+    start get-hddstat
+
+on fs
+    write /sys/block/sda/queue/scheduler deadline
+    write /sys/block/sda/queue/iosched/read_expire 1000
+    write /sys/block/sda/queue/iosched/write_expire 40000
+    write /sys/block/sda/queue/iosched/writes_starved 16
+    mount_all /fstab.foster_e_hdd
+    swapon_all /fstab.foster_e_hdd
+
+# factory reset protection
+    mkdir /persistent 0660 system system
+    setprop ro.frp.pst /dev/block/platform/tegra-sata.0/by-name/RP2
+
+service cyupdate /vendor/bin/cyupdate.sh
+    class main
+    user system
+    group system
+    oneshot
+    disabled
+

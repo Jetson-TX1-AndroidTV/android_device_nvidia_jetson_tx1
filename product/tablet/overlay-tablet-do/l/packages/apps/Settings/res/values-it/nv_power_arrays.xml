@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017, NVIDIA Corporation.  All rights reserved.
+
+    NVIDIA Corporation and its licensors retain all intellectual property and
+    proprietary rights in and to this software and related documentation.  Any
+    use, reproduction, disclosure or distribution of this software and related
+    documentation without an express license agreement from NVIDIA Corporation
+    is strictly prohibited.
+
+
+    THIS IS AUTOMATICALLY GENERATED FILE. DO NOT MODIFY.
+-->
+
+<resources>
+  <string-array name="screen_timeout_entries">
+    <item>Mai</item>
+    <item>15 secondi</item>
+    <item>30 secondi</item>
+    <item>1 minuto</item>
+    <item>2 minuti</item>
+    <item>5 minuti</item>
+    <item>10 minuti</item>
+    <item>30 minuti</item>
+  </string-array>
+</resources>

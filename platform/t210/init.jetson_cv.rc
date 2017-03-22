@@ -1,0 +1,68 @@
+#Copyright (c) 2016, NVIDIA CORPORATION.  All rights reserved.
+#
+#NVIDIA Corporation and its licensors retain all intellectual property and
+#proprietary rights in and to this software and related documentation.  Any
+#use, reproduction, disclosure or distribution of this software and related
+#documentation without an express license agreement from NVIDIA Corporation
+#is strictly prohibited.
+
+import init.tegra_emmc.rc
+import init.t210.rc
+import init.cal.rc
+import init.ray_touch.rc
+import init.diag.rc
+
+on init
+    # Load persistent dm-verity state
+    verity_load_state
+
+on late-init
+    write /dev/cpuset/foreground/boost/cpus 0-2
+    write /dev/cpuset/foreground/cpus 0-2
+    write /dev/cpuset/background/cpus 0
+    write /dev/cpuset/system-background/cpus 0-2
+    write /dev/cpuset/top-app/cpus 0-3
+
+on fs
+    setprop ro.wifi.sdmmc 1
+    setprop audio.custompolicy 1
+    setprop ro.gpsstatus.changed true
+    setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
+    setprop ro.crypto.umount_sd false
+    setprop ro.crypto.fuse_sdcard true
+    mount_all /fstab.jetson_cv
+    swapon_all /fstab.jetson_cv
+
+    # Adjust parameters for dm-verity devices
+    write /sys/block/dm-0/queue/read_ahead_kb 2048
+    write /sys/block/dm-1/queue/read_ahead_kb 2048
+    write /sys/module/dm_verity/parameters/prefetch_cluster 524288
+
+    # Update dm-verity state and set partition.*.verified properties
+    verity_update_state
+
+on verity-logging
+   exec u:r:slideshow:s0 root input -- /sbin/slideshow warning/verity_red_1 warning/verity_red_2
+
+on post-fs-data
+    chown root system /sys/class/gps_wake/gps_device/gps_enable
+    chmod 0664 /sys/class/gps_wake/gps_device/gps_enable
+    # config camera modules (camera features and media_profiles.xml)
+    mkdir /data/camera_config
+    mkdir /data/camera_config/etc
+    mkdir /data/camera_config/etc/permissions
+    exec -- /system/bin/config_cameras.sh load /system/etc/jetson_cv_cameras.def
+
+on property:persist.gps.present=true
+    symlink /system/etc/android.hardware.location.gps.xml /data/android.hardware.location.gps.xml
+    start start-gps
+
+on property:persist.gps.present=false
+    rm /data/android.hardware.location.gps.xml
+
+#start pbc daemon
+service pbc2 /system/vendor/bin/pbc2
+    class main
+    user system
+    group system
+    writepid /dev/cpuset/system-background/tasks

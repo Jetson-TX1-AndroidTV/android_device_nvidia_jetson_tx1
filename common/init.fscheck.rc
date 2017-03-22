@@ -1,0 +1,39 @@
+#Copyright (c) 2014-2017 NVIDIA Corporation.  All Rights Reserved.
+#
+#NVIDIA Corporation and its licensors retain all intellectual property and
+#proprietary rights in and to this software and related documentation.  Any
+#use, reproduction, disclosure or distribution of this software and related
+#documentation without an express license agreement from NVIDIA Corporation
+#is strictly prohibited.
+
+import init.tegra.rc
+
+on post-fs-data
+    mount ext4 /dev/block/platform/sdhci-tegra.3/by-name/FCT /mnt/factory ro context=u:object_r:factory_file:s0
+
+on property:vold.fscheck=start
+    start fscheck
+
+on property:vold.fscheck=shutdown_framework
+    class_reset late_start
+    class_reset main
+
+on property:vold.fscheck=format
+    start nv_setupfs
+
+service fscheck /system/bin/vdc --wait fscheck start
+    disabled
+    oneshot
+
+# this service is triggerred when vold.fscheck set to format
+# which is set by vold
+service nv_setupfs /system/bin/nv_setupfs.sh \
+        --data /dev/block/platform/sdhci-tegra.3/by-name/UDA \
+        /dev/block/platform/sdhci-tegra.3/by-name/CAC \
+        /dev/block/platform/sdhci-tegra.3/by-name/FCT \
+        /dev/block/platform/sdhci-tegra.3/by-name/UCB \
+        /dev/block/platform/sdhci-tegra.3/by-name/RP3
+    class core
+    user root
+    group root
+    oneshot

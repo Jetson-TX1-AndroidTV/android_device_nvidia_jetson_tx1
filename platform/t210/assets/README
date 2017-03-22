@@ -1,0 +1,17 @@
+================================================================================
+To add a new image do the below:
+
+** 1 **
+Add the image to the config_file as a tuple (image_name image_type resolution)
+
+** 2 **
+Command line to generate bmp.blob in the products folder from the images in config_file:
+
+cmd="nvblob_v2 -t bmp "; while read i; do cmd="$cmd""$i"" "; done < config_file; echo $cmd; eval $cmd
+
+================================================================================
+
+The doc in P4 that details the BMP blob design:
+//sw/chips/Loki/Management/Project/Notes/Multiple_Images_in_Single_Partition_Proposal.docx
+
+================================================================================
